@@ -20,23 +20,37 @@
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/list">List</a>
         </li>
 
+        <% if (loggedIn) { %>
         <li class="nav-item">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/post/new">
             New Post
           </a>
         </li>
+        <% } %>
 
+        <% if (!loggedIn) { %>
         <li class="nav-item">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/register">
             New User
           </a>
         </li>
+        <% } %>
 
+        <% if (!loggedIn) { %>
         <li class="nav-item">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/login">
             Login
           </a>
         </li>
+        <% } %>
+
+        <% if (loggedIn) { %>
+        <li class="nav-item">
+          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/logout">
+            Logout
+          </a>
+        </li>
+        <% } %>
 
       </ul>
     </div>
