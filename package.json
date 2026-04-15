@@ -1,0 +1,27 @@
+{
+  "name": "blog-mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnyazer/blog-mongo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/omnyazer/blog-mongo/issues"
+  },
+  "homepage": "https://github.com/omnyazer/blog-mongo#readme",
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-fileupload": "^1.5.2",
+    "mongoose": "^9.4.1"
+  }
+}
