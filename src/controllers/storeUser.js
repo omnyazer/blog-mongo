@@ -17,7 +17,8 @@ module.exports = (req, res) => {
         key => error.errors[key].message
       );
 
-      req.session.validationErrors = validationErrors;
+      req.flash('validationErrors', validationErrors);
+      req.flash('data', req.body);
 
       return res.redirect('/auth/register');
     });

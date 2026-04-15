@@ -13,6 +13,7 @@ const redirectIfAuthenticatedMiddleware = require('./src/middleware/redirectIfAu
 const validateMiddleware = require('./src/middleware/validateMiddleware');
 const express = require('express');
 const expressSession = require('express-session');
+const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -30,6 +31,7 @@ app.use(fileUpload());
 app.use(expressSession({
   secret: 'mySecretKey',
 }));
+app.use(flash());
 
 global.loggedIn = null;
 
