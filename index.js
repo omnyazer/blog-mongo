@@ -1,4 +1,9 @@
-const BlogPost = require('./src/models/blogPost');
+const homeController = require('./src/controllers/home');
+const listPostController = require('./src/controllers/listPost');
+const getPostController = require('./src/controllers/getPost');
+const newPostController = require('./src/controllers/newPost');
+const storePostController = require('./src/controllers/storePost');
+const validateMiddleware = require('./src/middleware/validateMiddleware');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
@@ -16,9 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 
 // routes
-app.get('/', (req, res) => {
-  res.render('index');
-});
+app.get('/', homeController);
 
 app.get('/about', (req, res) => {
   res.render('about');
@@ -28,66 +31,13 @@ app.get('/contact', (req, res) => {
   res.render('contact');
 });
 
-app.get('/post/new', (req, res) => {
-  res.render('create');
-});
+app.get('/post/new', newPostController);
 
-app.get('/post/:id', (req, res) => {
-  BlogPost.findById(req.params.id)
-    .then((blogPost) => {
-      res.render('post', { blogPost });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.render('post', { blogPost: null });
-    });
-});
+app.get('/post/:id', getPostController);
 
-app.get('/list', (req, res) => {
-  BlogPost.find()
-    .then((blogPosts) => {
-      res.render('list', { blogPosts });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.render('list', { blogPosts: [] });
-    });
-});
+app.get('/list', listPostController);
 
-app.post('/posts/store', (req, res) => {
-  const { title, body } = req.body;
-  const image = req.files && req.files.image ? req.files.image.name : null;
-
-  const createPost = () => {
-    BlogPost.create({ title, body, image })
-      .then((blogPost) => {
-        console.log('Blog post created:', blogPost);
-        res.redirect('/');
-      })
-      .catch((error) => {
-        console.error('Error creating blog post:', error);
-        res.render('create');
-      });
-  };
-
-  if (image) {
-    const imageFile = req.files.image;
-
-    imageFile.mv(
-      path.resolve(__dirname, 'public/images', image),
-      (error) => {
-        if (error) {
-          console.error('Error uploading image:', error);
-          return res.render('create');
-        }
-
-        createPost();
-      }
-    );
-  } else {
-    createPost();
-  }
-});
+app.post('/posts/store', validateMiddleware, storePostController);
 
 // connexion MongoDB
 mongoose
