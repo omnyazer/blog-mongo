@@ -49,9 +49,10 @@
                                 <h1>Post introuvable</h1>
                                 <h2 class="subheading">Aucun contenu disponible</h2>
                             <% } %>
-                            <% if (blogPost && blogPost.username) { %>
+                            <% if (blogPost && blogPost.userid) { %>
                                 <span class="meta">
-                                    Posted by <%= blogPost.username %>
+                                    Posted by
+                                    <a href="#!"><%= blogPost.userid.username %></a>
                                     on <%= blogPost.datePosted.toDateString() %>
                                 </span>
                             <% } %>

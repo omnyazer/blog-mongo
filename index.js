@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const homeController = require('./src/controllers/home');
 const listPostController = require('./src/controllers/listPost');
 const getPostController = require('./src/controllers/getPost');
@@ -72,7 +74,7 @@ app.use((req, res) => {
 
 // connexion MongoDB
 mongoose
-  .connect('mongodb://localhost/my_blog')
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log('Connecté à MongoDB');
   })

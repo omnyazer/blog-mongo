@@ -61,9 +61,11 @@
                                         <h2 class="post-title"><%= post.title %></h2>
                                         <h3 class="post-subtitle"><%= post.body %></h3>
                                     </a>
-                                    <% if (post.username) { %>
+                                    <% if (post.userid) { %>
                                         <p class="post-meta">
-                                            Posted by <%= post.username %> on <%= post.datePosted.toDateString() %>
+                                            Posted by
+                                            <a href="#!"><%= post.userid.username %></a>
+                                            on <%= post.datePosted.toDateString() %>
                                         </p>
                                     <% } %>
                                 </div>

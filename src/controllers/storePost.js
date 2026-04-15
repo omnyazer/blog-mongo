@@ -4,16 +4,23 @@ const path = require('path');
 module.exports = (req, res) => {
   const { title, body } = req.body;
   const image = req.files && req.files.image ? req.files.image.name : null;
+  const userid = req.session.userId;
 
   const createPost = () => {
-    BlogPost.create({ title, body, image })
+    BlogPost.create({ title, body, image, userid })
       .then((blogPost) => {
         console.log('Blog post created:', blogPost);
         res.redirect('/');
       })
       .catch((error) => {
-        console.error('Error creating blog post:', error);
-        res.render('create');
+        const validationErrors = Object.keys(error.errors).map(
+          key => error.errors[key].message
+        );
+
+        req.flash('validationErrors', validationErrors);
+        req.flash('data', req.body);
+
+        return res.redirect('/post/new');
       });
   };
 
