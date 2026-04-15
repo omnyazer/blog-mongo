@@ -1,8 +1,11 @@
 const homeController = require('./src/controllers/home');
 const listPostController = require('./src/controllers/listPost');
 const getPostController = require('./src/controllers/getPost');
+const loginController = require('./src/controllers/login');
 const newPostController = require('./src/controllers/newPost');
+const newUserController = require('./src/controllers/newUser');
 const storePostController = require('./src/controllers/storePost');
+const storeUserController = require('./src/controllers/storeUser');
 const validateMiddleware = require('./src/middleware/validateMiddleware');
 const express = require('express');
 const fileUpload = require('express-fileupload');
@@ -31,6 +34,10 @@ app.get('/contact', (req, res) => {
   res.render('contact');
 });
 
+app.get('/auth/login', loginController);
+
+app.get('/auth/register', newUserController);
+
 app.get('/post/new', newPostController);
 
 app.get('/post/:id', getPostController);
@@ -38,6 +45,7 @@ app.get('/post/:id', getPostController);
 app.get('/list', listPostController);
 
 app.post('/posts/store', validateMiddleware, storePostController);
+app.post('/users/register', storeUserController);
 
 // connexion MongoDB
 mongoose

@@ -19,9 +19,11 @@
   },
   "homepage": "https://github.com/omnyazer/blog-mongo#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "ejs": "^5.0.2",
     "express": "^5.2.1",
     "express-fileupload": "^1.5.2",
-    "mongoose": "^9.4.1"
+    "mongoose": "^9.4.1",
+    "mongoose-unique-validator": "^6.1.1"
   }
 }
