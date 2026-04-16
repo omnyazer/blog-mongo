@@ -37,12 +37,11 @@ app.use(flash());
 
 global.loggedIn = null;
 
-app.use("*", (req, res, next) => {
+app.use((req, res, next) => {
   loggedIn = req.session.userId;
   next();
 });
 
-// routes
 app.get('/', homeController);
 
 app.get('/about', (req, res) => {
@@ -72,7 +71,6 @@ app.use((req, res) => {
   res.status(404).render('notfound');
 });
 
-// connexion MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -82,7 +80,6 @@ mongoose
     console.error('Erreur MongoDB:', error.message);
   });
 
-// serveur
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });

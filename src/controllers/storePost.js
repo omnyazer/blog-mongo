@@ -10,7 +10,7 @@ module.exports = (req, res) => {
     BlogPost.create({ title, body, image, userid })
       .then((blogPost) => {
         console.log('Blog post created:', blogPost);
-        res.redirect('/');
+        res.redirect('/list');
       })
       .catch((error) => {
         const validationErrors = Object.keys(error.errors).map(
