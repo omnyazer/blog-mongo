@@ -1,7 +1,8 @@
 const BlogPost = require('../models/blogPost');
 
 module.exports = (req, res) => {
-  const redirectTo = req.get('referer') || '/list';
+  const referer = req.get('referer') || '';
+  const redirectTo = referer.includes('/post/') ? '/list' : (referer || '/');
 
   BlogPost.findById(req.params.id)
     .then((blogPost) => {
