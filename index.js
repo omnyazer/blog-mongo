@@ -68,7 +68,7 @@ app.get('/post/new', authMiddleware, newPostController);
 app.get('/post/example-ia', (req, res) => {
   const blogPost = {
     title: 'Comment l’IA transforme la robotique moderne',
-    body: "L’intelligence artificielle permet aux robots de mieux comprendre leur environnement, d’apprendre des comportements plus précis et d’automatiser des tâches complexes. Cet article exemple présente les bases de la vision IA, de l’apprentissage progressif et des usages concrets dans l’industrie, la santé et l’éducation.",
+    body: "Découvre le contenu complet de cet article ci-dessous.\n\nL’intelligence artificielle permet aux robots de mieux comprendre leur environnement, d’apprendre des comportements plus précis et d’automatiser des tâches complexes. Grâce à des technologies comme la vision par ordinateur, les robots peuvent analyser des images, reconnaître des objets et s’adapter en temps réel à ce qui les entoure.\n\nCet article exemple présente les bases de la vision IA, de l’apprentissage progressif et des usages concrets dans l’industrie, la santé et l’éducation. Par exemple, dans les usines, les robots peuvent ajuster leurs actions en fonction des situations, tandis que dans le domaine médical, ils assistent les professionnels avec une grande précision.\n\nÀ mesure que l’IA progresse, les robots deviennent plus autonomes et capables de prendre des décisions simples. Cette évolution ouvre la voie à de nombreuses innovations et transforme profondément notre manière d’utiliser la technologie au quotidien.",
     datePosted: new Date(),
     userid: null,
     image: null
