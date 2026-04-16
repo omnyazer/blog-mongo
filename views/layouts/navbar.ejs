@@ -1,59 +1,33 @@
-<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-  <div class="container px-4 px-lg-5">
+<nav class="sticky top-0 z-50 border-b border-[#d6ebf8] bg-[#f8fcff]/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+    <a href="/" class="inline-flex items-center gap-3">
+      <img src="/assets/img/logo.png" alt="Logo Tech & Bots" class="h-9 w-9 rounded-full border border-[#d7ebf8] bg-white object-cover shadow" />
+      <span class="text-lg font-extrabold tracking-tight text-[#174263]">TECH & BOTS</span>
+    </a>
 
-    <a class="navbar-brand" href="/">Start Bootstrap</a>
+    <div class="flex flex-wrap items-center gap-2">
+      <a class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#174263] shadow-sm ring-1 ring-[#d7ebf8] transition hover:bg-[#eef8ff]" href="/">Accueil</a>
+      <a class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#174263] shadow-sm ring-1 ring-[#d7ebf8] transition hover:bg-[#eef8ff]" href="/list">Blog</a>
+      <a class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#174263] shadow-sm ring-1 ring-[#d7ebf8] transition hover:bg-[#eef8ff]" href="/contact">Contact</a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      Menu
-      <i class="fas fa-bars"></i>
-    </button>
+      <% if (loggedIn) { %>
+        <a class="rounded-xl bg-[#4faee6] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#3a9bd4]" href="/post/new">New Post</a>
+      <% } %>
 
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ms-auto py-4 py-lg-0">
+      <% if (!loggedIn) { %>
+        <a class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#174263] shadow-sm ring-1 ring-[#d7ebf8] transition hover:bg-[#eef8ff]" href="/auth/register">New User</a>
+        <a class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#174263] shadow-sm ring-1 ring-[#d7ebf8] transition hover:bg-[#eef8ff]" href="/auth/login">
+          <img src="/assets/img/imageConnexion.png" alt="Connexion" class="h-4 w-4 object-contain" />
+          Login
+        </a>
+      <% } %>
 
-        <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/list">List</a>
-        </li>
-
-        <% if (loggedIn) { %>
-        <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/post/new">
-            New Post
-          </a>
-        </li>
-        <% } %>
-
-        <% if (!loggedIn) { %>
-        <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/register">
-            New User
-          </a>
-        </li>
-        <% } %>
-
-        <% if (!loggedIn) { %>
-        <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/login">
-            Login
-          </a>
-        </li>
-        <% } %>
-
-        <% if (loggedIn) { %>
-        <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/logout">
-            Logout
-          </a>
-        </li>
-        <% } %>
-
-      </ul>
+      <% if (loggedIn) { %>
+        <a class="inline-flex items-center gap-2 rounded-xl bg-[#ef8f59] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#de7b44]" href="/auth/logout">
+          <img src="/assets/img/ImageDeconnexion.png" alt="Déconnexion" class="h-4 w-4 object-contain" />
+          Logout
+        </a>
+      <% } %>
     </div>
-
   </div>
 </nav>

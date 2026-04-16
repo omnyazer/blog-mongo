@@ -1,10 +1,9 @@
 const BlogPost = require('../models/blogPost');
 
 module.exports = (req, res) => {
-  BlogPost.find()
+  BlogPost.find({ userid: { $exists: true, $ne: null } })
     .populate('userid')
     .sort({ datePosted: -1 })
-    .limit(4)
     .then((blogPosts) => {
       res.render('index', { blogPosts });
     })

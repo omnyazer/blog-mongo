@@ -9,6 +9,7 @@ const logoutController = require('./src/controllers/logout');
 const newPostController = require('./src/controllers/newPost');
 const newUserController = require('./src/controllers/newUser');
 const storePostController = require('./src/controllers/storePost');
+const deletePostController = require('./src/controllers/deletePost');
 const storeUserController = require('./src/controllers/storeUser');
 const authMiddleware = require('./src/middleware/authMiddleware');
 const redirectIfAuthenticatedMiddleware = require('./src/middleware/redirectIfAuthenticatedMiddleware');
@@ -60,11 +61,27 @@ app.get('/auth/register', redirectIfAuthenticatedMiddleware, newUserController);
 
 app.get('/post/new', authMiddleware, newPostController);
 
+app.get('/post/example-ia', (req, res) => {
+  const blogPost = {
+    title: 'Comment l’IA transforme la robotique moderne',
+    body: "L’intelligence artificielle permet aux robots de mieux comprendre leur environnement, d’apprendre des comportements plus précis et d’automatiser des tâches complexes. Cet article exemple présente les bases de la vision IA, de l’apprentissage progressif et des usages concrets dans l’industrie, la santé et l’éducation.",
+    datePosted: new Date(),
+    userid: null,
+    image: null
+  };
+
+  res.render('post', {
+    blogPost,
+    customHeaderImage: '/assets/img/RobotIA.png'
+  });
+});
+
 app.get('/post/:id', getPostController);
 
 app.get('/list', listPostController);
 
 app.post('/posts/store', validateMiddleware, storePostController);
+app.post('/posts/delete/:id', authMiddleware, deletePostController);
 app.post('/users/login', redirectIfAuthenticatedMiddleware, loginUserController);
 app.post('/users/register', redirectIfAuthenticatedMiddleware, storeUserController);
 app.use((req, res) => {

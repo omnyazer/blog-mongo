@@ -1,104 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Navigation-->
-        <%- include('layouts/navbar') %>
-        <!-- Page Header-->
-        <header class="masthead" style="background-image: url('/assets/img/contact-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="page-heading">
-                            <h1>Blog Posts</h1>
-                            <span class="subheading">Browse all published posts.</span>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog Mongo | List</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Manrope', 'ui-sans-serif', 'system-ui'] }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-[#ecf6fc] font-sans text-[#17364f]">
+    <%- include('layouts/navbar') %>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="rounded-[30px] border border-[#d6e8f5] bg-[#e9f4fb] p-5 sm:p-7">
+        <section class="rounded-3xl border border-[#cde3f3] bg-white p-5 shadow-[0_20px_35px_-28px_rgba(53,114,156,0.45)]">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 class="text-3xl font-extrabold">GRILLE DE BLOG & SIDEBAR</h1>
+              <p class="mt-1 text-sm text-[#4f7188]">Tous les posts publiés, avec recherche par titre.</p>
+            </div>
+            <form action="/list" method="GET" class="flex w-full max-w-sm items-center gap-2">
+              <input type="text" name="search" value="<%= typeof search !== 'undefined' ? search : '' %>" placeholder="Rechercher un titre..." oninput="this.form.submit()" class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-3 py-2 text-sm text-[#29506d] outline-none focus:border-[#51b4e8]" />
+              <button type="submit" class="rounded-xl bg-[#2fa8ef] px-4 py-2 text-sm font-bold text-white">Search</button>
+            </form>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-[2fr_1fr]">
+            <div>
+              <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <% const safeSearch = typeof search !== 'undefined' ? search.toLowerCase() : ''; %>
+              <% const exampleTitle = "comment l’ia transforme la robotique moderne"; %>
+              <% const hasResults = (blogPosts && blogPosts.length > 0) || (!safeSearch || exampleTitle.includes(safeSearch)); %>
+              <% if (!safeSearch || exampleTitle.includes(safeSearch)) { %>
+                  <article class="overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff] shadow-sm">
+                    <a href="/post/example-ia" class="block">
+                      <img src="/assets/img/RobotIA.png" alt="Robot post" class="h-28 w-full object-cover" />
+                      <div class="p-3">
+                        <h2 class="text-sm font-extrabold text-[#143b57]">Comment l’IA transforme la robotique moderne</h2>
+                        <p class="mt-1 line-clamp-2 text-xs text-[#4e6f86]">Article exemple sur l’IA appliquée à la robotique intelligente.</p>
+                        <p class="mt-2 text-[11px] font-semibold text-[#2f85b8]">Article exemple</p>
+                      </div>
+                    </a>
+                  </article>
+              <% } %>
+              <% if (blogPosts && blogPosts.length > 0) { %>
+                  <% blogPosts.forEach((post, index) => { %>
+                    <article class="overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff] shadow-sm">
+                      <a href="/post/<%= post._id %>" class="block">
+                        <img src="/assets/img/<%= index % 3 === 0 ? 'robotJardine.png' : index % 3 === 1 ? 'miniatureArticleRobotMedical.png' : 'robotsourit2.png' %>" alt="Robot post" class="h-28 w-full object-cover" />
+                        <div class="p-3">
+                          <h2 class="text-sm font-extrabold text-[#143b57]"><%= post.title %></h2>
+                          <p class="mt-1 line-clamp-2 text-xs text-[#4e6f86]"><%= post.body %></p>
+                          <% if (post.userid) { %>
+                            <p class="mt-2 text-[11px] font-semibold text-[#2f85b8]">Posted by <%= post.userid.username %> on <%= post.datePosted.toDateString() %></p>
+                          <% } %>
                         </div>
-                    </div>
-                </div>
+                      </a>
+                      <% if (loggedIn && post.userid && String(loggedIn) === String(post.userid._id)) { %>
+                        <form action="/posts/delete/<%= post._id %>" method="POST" class="px-3 pb-3">
+                          <button type="submit" class="w-full rounded-lg bg-[#ef8f59] px-3 py-2 text-xs font-bold text-white hover:bg-[#de7b44]" onclick="return confirm('Supprimer ce post ?');">Supprimer</button>
+                        </form>
+                      <% } %>
+                    </article>
+                  <% }) %>
+              <% } %>
+              <% if (!hasResults) { %>
+                  <div class="col-span-full rounded-xl border border-dashed border-[#bddbec] bg-[#f4fbff] p-8 text-center text-[#5b7b92]">Aucun post trouvé pour cette recherche.</div>
+              <% } %>
+              </div>
             </div>
-        </header>
-        <!-- Main Content-->
-        <main class="mb-4">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <% if (blogPosts && blogPosts.length > 0) { %>
-                            <% blogPosts.forEach((post) => { %>
-                                <div class="post-preview">
-                                    <a href="/post/<%= post._id %>">
-                                        <h2 class="post-title"><%= post.title %></h2>
-                                        <h3 class="post-subtitle"><%= post.body %></h3>
-                                    </a>
-                                    <% if (post.userid) { %>
-                                        <p class="post-meta">
-                                            Posted by
-                                            <a href="#!"><%= post.userid.username %></a>
-                                            on <%= post.datePosted.toDateString() %>
-                                        </p>
-                                    <% } %>
-                                </div>
-                                <hr class="my-4" />
-                            <% }) %>
-                        <% } else { %>
-                            <p>Aucun post disponible</p>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <!-- Footer-->
-        <footer class="border-top">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="#!">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#!">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#!">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2023</div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="/js/scripts.js"></script>
-    </body>
+
+            <aside class="space-y-4">
+              <div class="rounded-2xl border border-[#d7ebf7] bg-white p-5">
+                <h3 class="text-lg font-extrabold text-[#133a56]">Search</h3>
+                <p class="mt-2 text-sm text-[#4f7188]">Tu peux chercher un article par son titre exact ou partiel.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
 </html>
