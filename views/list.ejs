@@ -27,23 +27,18 @@
         <section class="rounded-3xl border border-[#cde3f3] bg-white p-5 shadow-[0_20px_35px_-28px_rgba(53,114,156,0.45)]">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 class="text-3xl font-extrabold">GRILLE DE BLOG & SIDEBAR</h1>
-              <p class="mt-1 text-sm text-[#4f7188]">Tous les posts publiés, avec recherche par titre.</p>
+              <h1 class="text-3xl font-extrabold sm:text-4xl">Tous Nos Articles Tech & Bots</h1>
+              <p class="mt-1 text-sm text-[#4f7188] sm:text-base">Découvre les derniers articles publiés par la communauté: robotique, IA, code et innovations.</p>
             </div>
-            <form action="/list" method="GET" class="flex w-full max-w-sm items-center gap-2">
-              <input type="text" name="search" value="<%= typeof search !== 'undefined' ? search : '' %>" placeholder="Rechercher un titre..." oninput="this.form.submit()" class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-3 py-2 text-sm text-[#29506d] outline-none focus:border-[#51b4e8]" />
-              <button type="submit" class="rounded-xl bg-[#2fa8ef] px-4 py-2 text-sm font-bold text-white">Search</button>
-            </form>
+            <div class="flex w-full max-w-sm items-center gap-2">
+              <input id="liveSearch" type="text" value="<%= typeof search !== 'undefined' ? search : '' %>" placeholder="Rechercher un titre..." class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-3 py-2 text-sm text-[#29506d] outline-none focus:border-[#51b4e8]" />
+            </div>
           </div>
 
           <div class="grid gap-6 lg:grid-cols-[2fr_1fr]">
             <div>
               <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <% const safeSearch = typeof search !== 'undefined' ? search.toLowerCase() : ''; %>
-              <% const exampleTitle = "comment l’ia transforme la robotique moderne"; %>
-              <% const hasResults = (blogPosts && blogPosts.length > 0) || (!safeSearch || exampleTitle.includes(safeSearch)); %>
-              <% if (!safeSearch || exampleTitle.includes(safeSearch)) { %>
-                  <article class="overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff] shadow-sm">
+                  <article class="post-card overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff] shadow-sm" data-title="comment l’ia transforme la robotique moderne">
                     <a href="/post/example-ia" class="block">
                       <img src="/assets/img/RobotIA.png" alt="Robot post" class="h-28 w-full object-cover" />
                       <div class="p-3">
@@ -53,12 +48,11 @@
                       </div>
                     </a>
                   </article>
-              <% } %>
               <% if (blogPosts && blogPosts.length > 0) { %>
                   <% blogPosts.forEach((post, index) => { %>
-                    <article class="overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff] shadow-sm">
+                    <article class="post-card overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff] shadow-sm" data-title="<%= (post.title || '').toLowerCase() %>">
                       <a href="/post/<%= post._id %>" class="block">
-                        <img src="/assets/img/<%= index % 3 === 0 ? 'robotJardine.png' : index % 3 === 1 ? 'miniatureArticleRobotMedical.png' : 'robotsourit2.png' %>" alt="Robot post" class="h-28 w-full object-cover" />
+                        <img src="<%= post.image ? ('/images/' + post.image) : '/assets/img/RobotNeutre1.png' %>" alt="Robot post" class="h-28 w-full object-cover" />
                         <div class="p-3">
                           <h2 class="text-sm font-extrabold text-[#143b57]"><%= post.title %></h2>
                           <p class="mt-1 line-clamp-2 text-xs text-[#4e6f86]"><%= post.body %></p>
@@ -75,9 +69,7 @@
                     </article>
                   <% }) %>
               <% } %>
-              <% if (!hasResults) { %>
-                  <div class="col-span-full rounded-xl border border-dashed border-[#bddbec] bg-[#f4fbff] p-8 text-center text-[#5b7b92]">Aucun post trouvé pour cette recherche.</div>
-              <% } %>
+                  <div id="noSearchResult" class="col-span-full hidden rounded-xl border border-dashed border-[#bddbec] bg-[#f4fbff] p-8 text-center text-[#5b7b92]">Aucun post trouvé pour cette recherche.</div>
               </div>
             </div>
 
@@ -91,5 +83,33 @@
         </section>
       </div>
     </main>
+    <script>
+      (function () {
+        const input = document.getElementById('liveSearch');
+        const cards = Array.from(document.querySelectorAll('.post-card'));
+        const noResult = document.getElementById('noSearchResult');
+
+        if (!input || cards.length === 0) return;
+
+        const applyFilter = () => {
+          const query = (input.value || '').toLowerCase().trim();
+          let visible = 0;
+
+          cards.forEach((card) => {
+            const title = (card.getAttribute('data-title') || '').toLowerCase();
+            const show = !query || title.includes(query);
+            card.style.display = show ? '' : 'none';
+            if (show) visible += 1;
+          });
+
+          if (noResult) {
+            noResult.classList.toggle('hidden', visible !== 0);
+          }
+        };
+
+        input.addEventListener('input', applyFilter);
+        applyFilter();
+      })();
+    </script>
   </body>
 </html>

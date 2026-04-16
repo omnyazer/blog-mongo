@@ -24,10 +24,10 @@
 
     <%- include('layouts/navbar') %>
 
-    <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <section class="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
-        <div class="rounded-[32px] border border-[#d7ebf7] bg-white p-8 shadow-[0_18px_40px_-30px_rgba(44,116,160,0.45)] sm:p-10">
-          <h1 class="text-4xl font-extrabold text-[#12344e] sm:text-5xl">Register</h1>
+    <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <section class="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+        <div class="rounded-[32px] border border-[#d7ebf7] bg-white p-10 shadow-[0_18px_40px_-30px_rgba(44,116,160,0.45)] sm:p-12">
+          <h1 class="text-5xl font-extrabold text-[#12344e] sm:text-6xl">Register</h1>
 
           <% if (errors && errors.length > 0) { %>
             <ul class="mt-5 space-y-2">
@@ -37,24 +37,24 @@
             </ul>
           <% } %>
 
-          <form action="/users/register" method="POST" class="mt-8 space-y-6">
+          <form action="/users/register" method="POST" class="mt-10 space-y-7">
             <div>
-              <label for="username" class="mb-2 block text-base font-bold text-[#2d5775]">Username</label>
-              <input type="text" name="username" id="username" value="<%= username %>" class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-4 py-4 text-[#20455f] outline-none transition focus:border-[#57b5e8] focus:ring-2 focus:ring-[#bae6ff]" />
+              <label for="username" class="mb-2 block text-lg font-bold text-[#2d5775]">Username</label>
+              <input type="text" name="username" id="username" value="<%= username %>" class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-5 py-5 text-lg text-[#20455f] outline-none transition focus:border-[#57b5e8] focus:ring-2 focus:ring-[#bae6ff]" />
             </div>
 
             <div>
-              <label for="password" class="mb-2 block text-base font-bold text-[#2d5775]">Password</label>
-              <input type="password" name="password" id="password" value="<%= password %>" class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-4 py-4 text-[#20455f] outline-none transition focus:border-[#57b5e8] focus:ring-2 focus:ring-[#bae6ff]" />
+              <label for="password" class="mb-2 block text-lg font-bold text-[#2d5775]">Password</label>
+              <input type="password" name="password" id="password" value="<%= password %>" class="w-full rounded-xl border border-[#cfe6f5] bg-[#f7fcff] px-5 py-5 text-lg text-[#20455f] outline-none transition focus:border-[#57b5e8] focus:ring-2 focus:ring-[#bae6ff]" />
             </div>
 
-            <button type="submit" class="inline-flex rounded-xl bg-[#58b8e8] px-8 py-3 text-base font-extrabold text-white transition hover:bg-[#419fd0]">Register</button>
+            <button type="submit" class="inline-flex rounded-xl bg-[#58b8e8] px-9 py-4 text-lg font-extrabold text-white transition hover:bg-[#419fd0]">Register</button>
           </form>
         </div>
 
-        <aside class="rounded-[32px] border border-[#d7ebf7] bg-white p-6 shadow-[0_18px_40px_-30px_rgba(44,116,160,0.45)]">
-          <img src="/assets/img/ImageConnexion.png" alt="Robot register" class="w-full rounded-xl border border-[#d2e9f7] bg-[#f7fcff] object-contain p-2" />
-          <p class="mt-4 text-sm text-[#4f7188]">🛠️ Crée ton compte pour rejoindre la communauté Tech & Bots.</p>
+        <aside class="rounded-[32px] border border-[#d7ebf7] bg-white p-8 shadow-[0_18px_40px_-30px_rgba(44,116,160,0.45)]">
+          <img src="/assets/img/ImageDeconnexion.png" alt="Robot register" class="w-full rounded-xl border border-[#d2e9f7] bg-[#f7fcff] object-contain p-2" />
+          <p class="mt-4 text-base text-[#4f7188]">🛠️ Crée ton compte pour rejoindre la communauté Tech & Bots.</p>
         </aside>
       </section>
     </main>

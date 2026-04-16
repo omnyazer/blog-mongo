@@ -93,7 +93,7 @@
                 <% blogPosts.forEach((post, index) => { %>
                   <article class="overflow-hidden rounded-xl border border-[#cfe6f5] bg-[#f8fcff]">
                     <a href="/post/<%= post._id %>" class="block">
-                      <img src="/assets/img/<%= index % 3 === 0 ? 'robotJardine.png' : index % 3 === 1 ? 'miniatureArticleRobotMedical.png' : 'robotsourit2.png' %>" alt="robot" class="h-28 w-full object-cover" />
+                      <img src="<%= post.image ? ('/images/' + post.image) : '/assets/img/RobotNeutre1.png' %>" alt="robot" class="h-28 w-full object-cover" />
                       <div class="p-3">
                         <h3 class="line-clamp-1 text-sm font-extrabold text-[#133a56]"><%= post.title %></h3>
                         <p class="mt-1 line-clamp-2 text-xs text-[#4f7188]"><%= post.body %></p>
